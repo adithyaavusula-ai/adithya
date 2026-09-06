@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const mongoose   = require('mongoose');
 const Contact    = require('../models/Contact');
 
 /* ─────────────────────────────────────────────
@@ -46,18 +47,24 @@ const handleContactForm = async (req, res) => {
       });
     }
 
-    // ── 2. Save to MongoDB ─────────────────────
+    // ── 2. Save to MongoDB (only if connected) ────
     const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown';
-    const contact = await Contact.create({
-      name:      name.trim(),
-      email:     email.trim().toLowerCase(),
-      phone:     phone.trim(),
-      subject:   subject ? subject.trim() : 'No Subject',
-      message:   message.trim(),
-      ipAddress: ip,
-    });
+    let contact = null;
+    const isDbConnected = mongoose.connection.readyState === 1;
 
-    console.log(`✅ Contact saved [${contact._id}] from ${email}`);
+    if (isDbConnected) {
+      contact = await Contact.create({
+        name:      name.trim(),
+        email:     email.trim().toLowerCase(),
+        phone:     phone.trim(),
+        subject:   subject ? subject.trim() : 'No Subject',
+        message:   message.trim(),
+        ipAddress: ip,
+      });
+      console.log(`✅ Contact saved [${contact._id}] from ${email}`);
+    } else {
+      console.warn(`⚠️  MongoDB not connected — skipping DB save for message from ${email}`);
+    }
 
     // ── 3. Send notification email ─────────────
     try {
@@ -87,7 +94,7 @@ const handleContactForm = async (req, res) => {
               </div>
               <div style="margin-top:28px;padding-top:20px;border-top:1px solid #334155;font-size:12px;color:#475569;">
                 <p style="margin:0;">Received: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST</p>
-                <p style="margin:4px 0 0;">ID: ${contact._id} | IP: ${ip}</p>
+                <p style="margin:4px 0 0;">ID: ${contact ? contact._id : 'not-saved'} | IP: ${ip}</p>
               </div>
             </div>
           </div>
@@ -105,7 +112,7 @@ const handleContactForm = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: 'Message received! Adithya will get back to you soon.',
-      id: contact._id,
+      id: contact ? contact._id : null,
     });
 
   } catch (err) {
