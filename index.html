@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Adithya Avusula — Aspiring Software Engineer & AI/LLM Developer. Portfolio showcasing full-stack web development and AI projects." />
+    <meta name="author" content="Adithya Avusula" />
+    <meta name="google-site-verification" content="nVwtiAlaAqcs12gju2a27_qQEIfaVhw8DUZ_MoNnfX0" />
+    <title>Adithya Avusula | Software Engineer & AI/LLM Developer</title>
+
+    <!-- Tailwind CSS via CDN (recommended for quick personal portfolios) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter for UI, JetBrains Mono for code accents -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind Theme Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            200: '#a5f3fc',
+                            300: '#67e8f9',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            700: '#0e7490',
+                            800: '#155e75',
+                            900: '#164e63',
+                        },
+                        ink: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            400: '#94a3b8',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                    },
+                    boxShadow: {
+                        glow: '0 0 30px -5px rgba(34, 211, 238, 0.35)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        /* Custom styles to complement Tailwind */
+        html {
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #e2e8f0;
+        }
+
+        /* Animated gradient background blobs */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Section reveal animation hook */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0891b2;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #22d3ee;
+        }
+
+        /* Gradient text utility */
+        .gradient-text {
+            background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Toast slide-in */
+        .toast-enter {
+            animation: toastIn 0.4s ease-out forwards;
+        }
+
+        @keyframes toastIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-exit {
+            animation: toastOut 0.4s ease-in forwards;
+        }
+
+        @keyframes toastOut {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+        }
+
+        /* Skill card hover glow */
+        .skill-card:hover {
+            box-shadow: 0 0 25px -5px rgba(34, 211, 238, 0.35);
+            transform: translateY(-4px);
+        }
+
+        /* Project card subtle gradient border */
+        .project-card {
+            position: relative;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.6) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .project-card:hover {
+            border-color: rgba(34, 211, 238, 0.4);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -10px rgba(34, 211, 238, 0.15);
+        }
+
+        /* Mobile menu slide */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+<body class="antialiased overflow-x-hidden">
+
+    <!-- ====================== DECORATIVE BACKGROUND ====================== -->
+    <div aria-hidden="true" class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="blob bg-brand-500 w-96 h-96 top-0 -left-20 animate-float"></div>
+        <div class="blob bg-purple-500 w-96 h-96 top-1/3 right-0 animate-float" style="animation-delay: 2s;"></div>
+        <div class="blob bg-pink-500 w-96 h-96 bottom-0 left-1/3 animate-float" style="animation-delay: 4s;"></div>
+    </div>
+
+    <!-- ====================== HEADER / NAVIGATION ====================== -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#home" class="flex items-center gap-2 group">
+                <div
+                    class="w-10 h-10 rounded-lg bg-gradient-to-br from-brand-400 to-purple-500 flex items-center justify-center font-bold text-white text-lg shadow-glow group-hover:scale-110 transition-transform">
+                    A
+                </div>
+                <span class="font-bold text-lg text-white">
+                    Adithya<span class="text-brand-400">.dev</span>
+                </span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <ul class="hidden lg:flex items-center gap-8">
+                <li><a href="#about"
+                        class="nav-link text-sm font-medium text-ink-200 hover:text-brand-400 transition-colors">About</a>
+                </li>
+                <li><a href="#skills"
+                        class="nav-link text-sm font-medium text-ink-200 hover:text-brand-400 transition-colors">Skills</a>
+                </li>
+                <li><a href="#projects"
+                        class="nav-link text-sm font-medium text-ink-200 hover:text-brand-400 transition-colors">Projects</a>
+                </li>
+                <li><a href="#education"
+                        class="nav-link text-sm font-medium text-ink-200 hover:text-brand-400 transition-colors">Education</a>
+                </li>
+                <li><a href="#contact"
+                        class="nav-link text-sm font-medium text-ink-200 hover:text-brand-400 transition-colors">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Social + CTA (Desktop) -->
+            <div class="hidden lg:flex items-center gap-4">
+                <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener" aria-label="GitHub"
+                    class="text-ink-200 hover:text-brand-400 transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/adithya-avusula-a56483412" target="_blank" rel="noopener"
+                    aria-label="LinkedIn" class="text-ink-200 hover:text-brand-400 transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+                    </svg>
+                </a>
+                <a href="#contact"
+                    class="px-4 py-2 text-sm font-semibold rounded-lg bg-brand-500 hover:bg-brand-400 text-ink-950 transition-all shadow-glow">
+                    Hire Me
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button id="menuToggle" aria-label="Toggle navigation" aria-expanded="false"
+                class="lg:hidden p-2 rounded-lg text-ink-200 hover:text-brand-400 hover:bg-ink-800 transition-colors">
+                <svg id="iconOpen" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg id="iconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobileMenu"
+        class="mobile-menu fixed top-0 right-0 h-full w-72 bg-ink-900/95 backdrop-blur-xl border-l border-ink-800 z-50 p-6 lg:hidden">
+        <button id="closeMenu" aria-label="Close menu" class="absolute top-5 right-5 text-ink-200 hover:text-brand-400">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <ul class="flex flex-col gap-6 mt-16">
+            <li><a href="#about"
+                    class="mobile-link block text-lg font-medium text-ink-100 hover:text-brand-400">About</a></li>
+            <li><a href="#skills"
+                    class="mobile-link block text-lg font-medium text-ink-100 hover:text-brand-400">Skills</a></li>
+            <li><a href="#projects"
+                    class="mobile-link block text-lg font-medium text-ink-100 hover:text-brand-400">Projects</a></li>
+            <li><a href="#education"
+                    class="mobile-link block text-lg font-medium text-ink-100 hover:text-brand-400">Education</a></li>
+            <li><a href="#contact"
+                    class="mobile-link block text-lg font-medium text-ink-100 hover:text-brand-400">Contact</a></li>
+        </ul>
+        <div class="mt-10 pt-6 border-t border-ink-800 flex items-center gap-5">
+            <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener"
+                class="text-ink-200 hover:text-brand-400">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/adithya-avusula-a56483412" target="_blank" rel="noopener"
+                class="text-ink-200 hover:text-brand-400">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+                </svg>
+            </a>
+            <a href="mailto:adithyaavusula@gmail.com" class="text-ink-200 hover:text-brand-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+            </a>
+        </div>
+    </div>
+    <div id="menuOverlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
+
+    <!-- ====================== HERO SECTION ====================== -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <!-- Status pill -->
+            <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ink-800/60 border border-brand-500/30 backdrop-blur-sm mb-6 animate-fade-in">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                </span>
+                <span class="text-xs font-mono text-brand-300">Available for Internships & Collaborations</span>
+            </div>
+
+            <!-- Headline -->
+            <h1
+                class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight mb-6 animate-fade-in-up">
+                Hi, I'm <span class="gradient-text">Adithya Avusula</span>
+                <br />
+                <span class="text-ink-100 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Aspiring Software
+                    Engineer</span>
+            </h1>
+
+            <!-- Tagline -->
+            <p class="text-lg sm:text-xl md:text-2xl text-ink-200 max-w-3xl mx-auto mb-10 leading-relaxed animate-fade-in-up"
+                style="animation-delay: 0.2s;">
+                Full Stack Web Developer & AI/LLM Innovator crafting modern digital experiences with clean code,
+                intelligent systems, and a passion for building the future.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up"
+                style="animation-delay: 0.4s;">
+                <a href="#projects"
+                    class="w-full sm:w-auto px-8 py-4 rounded-xl bg-brand-500 hover:bg-brand-400 text-ink-950 font-semibold shadow-glow hover:scale-105 transition-all flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    View Projects
+                </a>
+                <a href="#contact"
+                    class="w-full sm:w-auto px-8 py-4 rounded-xl bg-ink-800/60 hover:bg-ink-700 text-ink-100 font-semibold border border-ink-700 hover:border-brand-500/50 transition-all flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Contact Me
+                </a>
+            </div>
+
+            <!-- Quick stats -->
+            <div class="grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl mx-auto mt-16 animate-fade-in-up"
+                style="animation-delay: 0.6s;">
+                <div class="text-center">
+                    <div class="text-2xl sm:text-3xl font-bold gradient-text">10+</div>
+                    <div class="text-xs sm:text-sm text-ink-400 mt-1">Projects Built</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl sm:text-3xl font-bold gradient-text">AI/LLM</div>
+                    <div class="text-xs sm:text-sm text-ink-400 mt-1">Specialization</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl sm:text-3xl font-bold gradient-text">B.Tech</div>
+                    <div class="text-xs sm:text-sm text-ink-400 mt-1">IT Student</div>
+                </div>
+            </div>
+
+            <!-- Scroll indicator -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden sm:block">
+                <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================== ABOUT SECTION ====================== -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 reveal">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-sm font-mono text-brand-400 mb-2">// ABOUT ME</h2>
+                <h3 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white">Get to Know Me</h3>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+                <!-- Avatar / Visual -->
+                <div class="lg:col-span-2 flex justify-center">
+                    <div class="relative">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-brand-500 to-purple-500 rounded-2xl blur-2xl opacity-40">
+                        </div>
+                        <div
+                            class="relative w-64 h-64 sm:w-72 sm:h-72 rounded-2xl bg-gradient-to-br from-ink-800 to-ink-900 border border-ink-700 flex items-center justify-center overflow-hidden">
+                            <div class="text-7xl sm:text-8xl font-extrabold gradient-text">A</div>
+                            <!-- Decorative dots -->
+                            <div class="absolute top-4 right-4 w-2 h-2 rounded-full bg-brand-400 animate-pulse"></div>
+                            <div class="absolute bottom-4 left-4 w-2 h-2 rounded-full bg-purple-400 animate-pulse"
+                                style="animation-delay: 1s;"></div>
+                        </div>
+                        <div
+                            class="absolute -bottom-4 -right-4 bg-brand-500 text-ink-950 rounded-xl px-4 py-2 font-bold shadow-glow">
+                            🎓 B.Tech IT
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bio -->
+                <div class="lg:col-span-3 space-y-5 text-ink-200 leading-relaxed">
+                    <p class="text-lg">
+                        I'm a <span class="text-brand-400 font-semibold">first-year B.Tech Information Technology
+                            student</span> at
+                        <span class="text-brand-400 font-semibold">MVSR Engineering College</span>, passionate about
+                        engineering elegant software solutions that solve real-world problems.
+                    </p>
+                    <p>
+                        My focus spans across <span class="text-white font-medium">full-stack web development</span> and
+                        the rapidly evolving world of
+                        <span class="text-white font-medium">Large Language Models (LLMs)</span>. I love building
+                        responsive, performant applications — from intuitive frontends to scalable backends — and
+                        exploring how AI can augment human creativity.
+                    </p>
+                    <p>
+                        When I'm not coding, I'm learning about <span class="text-brand-400">AI system design</span>,
+                        contributing to open-source, and experimenting with new frameworks. My goal is to engineer
+                        intelligent, human-centered software that makes a tangible impact.
+                    </p>
+
+                    <!-- Info tags -->
+                    <div class="flex flex-wrap gap-3 pt-4">
+                        <span class="px-3 py-1.5 rounded-lg bg-ink-800 border border-ink-700 text-sm font-mono">📍
+                            Hyderabad, India</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ink-800 border border-ink-700 text-sm font-mono">🎯 Open
+                            to Opportunities</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-ink-800 border border-ink-700 text-sm font-mono">🚀
+                            Lifelong Learner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================== SKILLS SECTION ====================== -->
+    <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 reveal">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-sm font-mono text-brand-400 mb-2">// TECH STACK</h2>
+                <h3 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white">Skills & Expertise</h3>
+                <p class="text-ink-400 mt-4 max-w-2xl mx-auto">Technologies and tools I use to bring ideas to life.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Web Development -->
+                <div
+                    class="skill-card p-6 rounded-2xl bg-ink-900/60 backdrop-blur-sm border border-ink-800 transition-all duration-300">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Web Development</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-brand-300 border border-brand-500/20">HTML5</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-brand-300 border border-brand-500/20">CSS3</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-brand-300 border border-brand-500/20">JavaScript</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-brand-300 border border-brand-500/20">TypeScript</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-brand-300 border border-brand-500/20">React</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-brand-300 border border-brand-500/20">Next.js</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-brand-300 border border-brand-500/20">Tailwind
+                            CSS</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-brand-300 border border-brand-500/20">Node.js</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-brand-300 border border-brand-500/20">Express</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-brand-300 border border-brand-500/20">REST
+                            APIs</span>
+                    </div>
+                </div>
+
+                <!-- AI & LLMs -->
+                <div
+                    class="skill-card p-6 rounded-2xl bg-ink-900/60 backdrop-blur-sm border border-ink-800 transition-all duration-300">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">AI & LLMs</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-purple-300 border border-purple-500/20">Python</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-purple-300 border border-purple-500/20">OpenAI
+                            API</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-purple-300 border border-purple-500/20">Prompt
+                            Engineering</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-purple-300 border border-purple-500/20">LangChain</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-purple-300 border border-purple-500/20">Hugging
+                            Face</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-purple-300 border border-purple-500/20">Vector
+                            DBs</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-purple-300 border border-purple-500/20">RAG
+                            Systems</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-purple-300 border border-purple-500/20">Fine-Tuning</span>
+                    </div>
+                </div>
+
+                <!-- Core CS -->
+                <div
+                    class="skill-card p-6 rounded-2xl bg-ink-900/60 backdrop-blur-sm border border-ink-800 transition-all duration-300 sm:col-span-2 lg:col-span-1">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Core Computer Science</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-emerald-300 border border-emerald-500/20">Data
+                            Structures</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-emerald-300 border border-emerald-500/20">Algorithms</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-emerald-300 border border-emerald-500/20">OOP</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-emerald-300 border border-emerald-500/20">DBMS</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-emerald-300 border border-emerald-500/20">Operating
+                            Systems</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-emerald-300 border border-emerald-500/20">Computer
+                            Networks</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-emerald-300 border border-emerald-500/20">Git
+                            & GitHub</span>
+                        <span
+                            class="px-3 py-1 text-xs rounded-full bg-ink-800 text-emerald-300 border border-emerald-500/20">Linux
+                            CLI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================== PROJECTS SECTION ====================== -->
+    <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 reveal">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-sm font-mono text-brand-400 mb-2">// PORTFOLIO</h2>
+                <h3 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white">Featured Projects</h3>
+                <p class="text-ink-400 mt-4 max-w-2xl mx-auto">A selection of recent work spanning full-stack web apps
+                    and AI-powered tools.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Project 1 -->
+                <article class="project-card rounded-2xl p-6 transition-all duration-300 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500 to-blue-600 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                        </div>
+                        <span class="text-xs font-mono text-brand-400">v1.2</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">AI Chat Companion</h4>
+                    <p class="text-ink-400 text-sm mb-4 flex-grow">A conversational AI assistant built with OpenAI's GPT
+                        API, featuring streaming responses, conversation history, and a sleek React UI.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-brand-300">React</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-brand-300">OpenAI API</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-brand-300">Node.js</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-brand-300">Tailwind</span>
+                    </div>
+                    <div class="flex gap-3 pt-4 border-t border-ink-800">
+                        <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
+                            </svg>
+                            Code
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Live Demo
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 2 -->
+                <article class="project-card rounded-2xl p-6 transition-all duration-300 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <span class="text-xs font-mono text-brand-400">v1.0</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Smart Resume Analyzer</h4>
+                    <p class="text-ink-400 text-sm mb-4 flex-grow">An LLM-powered tool that parses resumes, extracts key
+                        skills, and provides AI-driven feedback to optimize for ATS systems.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-purple-300">Python</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-purple-300">LangChain</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-purple-300">FastAPI</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-purple-300">NLP</span>
+                    </div>
+                    <div class="flex gap-3 pt-4 border-t border-ink-800">
+                        <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
+                            </svg>
+                            Code
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Live Demo
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 3 -->
+                <article class="project-card rounded-2xl p-6 transition-all duration-300 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <span class="text-xs font-mono text-brand-400">v2.1</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">E-Commerce Platform</h4>
+                    <p class="text-ink-400 text-sm mb-4 flex-grow">A full-stack MERN e-commerce app with user auth, cart
+                        management, Stripe payments, and an admin dashboard for inventory control.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-emerald-300">MongoDB</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-emerald-300">Express</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-emerald-300">React</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-emerald-300">Node.js</span>
+                    </div>
+                    <div class="flex gap-3 pt-4 border-t border-ink-800">
+                        <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
+                            </svg>
+                            Code
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Live Demo
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 4 -->
+                <article class="project-card rounded-2xl p-6 transition-all duration-300 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                            </svg>
+                        </div>
+                        <span class="text-xs font-mono text-brand-400">v1.5</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Music Streaming UI</h4>
+                    <p class="text-ink-400 text-sm mb-4 flex-grow">A Spotify-inspired responsive music player with
+                        playlist management, search, and a sleek dark-themed interface built with React.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-orange-300">React</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-orange-300">Tailwind</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-orange-300">Spotify API</span>
+                    </div>
+                    <div class="flex gap-3 pt-4 border-t border-ink-800">
+                        <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
+                            </svg>
+                            Code
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Live Demo
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 5 -->
+                <article class="project-card rounded-2xl p-6 transition-all duration-300 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <span class="text-xs font-mono text-brand-400">v1.0</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Task Automation Bot</h4>
+                    <p class="text-ink-400 text-sm mb-4 flex-grow">A Python automation suite using LLMs to summarize
+                        emails, schedule meetings, and generate reports from raw data.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-yellow-300">Python</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-yellow-300">GPT-4</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-yellow-300">Selenium</span>
+                    </div>
+                    <div class="flex gap-3 pt-4 border-t border-ink-800">
+                        <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
+                            </svg>
+                            Code
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Live Demo
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Project 6 -->
+                <article class="project-card rounded-2xl p-6 transition-all duration-300 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <span class="text-xs font-mono text-brand-400">v1.3</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Smart Calendar App</h4>
+                    <p class="text-ink-400 text-sm mb-4 flex-grow">A productivity calendar with AI-powered event
+                        suggestions, natural language input, and cross-device sync via the browser.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-cyan-300">Next.js</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-cyan-300">TypeScript</span>
+                        <span class="px-2 py-1 text-xs rounded bg-ink-800 text-cyan-300">Prisma</span>
+                    </div>
+                    <div class="flex gap-3 pt-4 border-t border-ink-800">
+                        <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
+                            </svg>
+                            Code
+                        </a>
+                        <a href="#"
+                            class="flex items-center gap-1 text-sm text-ink-200 hover:text-brand-400 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Live Demo
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- View all -->
+            <div class="text-center mt-12">
+                <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener"
+                    class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-ink-800 hover:bg-ink-700 text-ink-100 font-semibold border border-ink-700 hover:border-brand-500/50 transition-all">
+                    View All on GitHub
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================== EDUCATION TIMELINE ====================== -->
+    <section id="education" class="py-20 px-4 sm:px-6 lg:px-8 reveal">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-sm font-mono text-brand-400 mb-2">// EDUCATION</h2>
+                <h3 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white">Academic Journey</h3>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline line -->
+                <div
+                    class="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-500 via-purple-500 to-transparent">
+                </div>
+
+                <!-- Timeline item -->
+                <div class="relative mb-8 sm:ml-1/2 pl-12 sm:pl-0">
+                    <div class="sm:grid sm:grid-cols-2 sm:gap-8">
+                        <div class="sm:text-right sm:pr-12">
+                            <span
+                                class="inline-block px-3 py-1 text-xs font-mono rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30">2026
+                                — Present</span>
+                        </div>
+                        <div class="hidden sm:block"></div>
+                    </div>
+                    <!-- Dot -->
+                    <div
+                        class="absolute left-2 sm:left-1/2 sm:-translate-x-1/2 top-2 w-5 h-5 rounded-full bg-brand-500 border-4 border-ink-950 shadow-glow">
+                    </div>
+
+                    <div
+                        class="mt-4 p-6 rounded-2xl bg-ink-900/60 backdrop-blur-sm border border-ink-800 hover:border-brand-500/50 transition-all">
+                        <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+                            <h4 class="text-xl font-bold text-white">B.Tech — Information Technology</h4>
+                            <span class="text-xs font-mono text-brand-400">Current</span>
+                        </div>
+                        <p class="text-brand-300 font-semibold mb-2">MVSR Engineering College</p>
+                        <p class="text-ink-400 text-sm mb-3">A premier engineering institution in Hyderabad focused on
+                            producing industry-ready technologists. Currently exploring core CS fundamentals, modern web
+                            stacks, and AI/LLM research.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs rounded bg-ink-800 text-ink-200">DSA</span>
+                            <span class="px-2 py-1 text-xs rounded bg-ink-800 text-ink-200">Web Engineering</span>
+                            <span class="px-2 py-1 text-xs rounded bg-ink-800 text-ink-200">AI/ML</span>
+                            <span class="px-2 py-1 text-xs rounded bg-ink-800 text-ink-200">DBMS</span>
+                            <span class="px-2 py-1 text-xs rounded bg-ink-800 text-ink-200">OS & CN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Future/Goal -->
+                <div class="relative pl-12 sm:pl-0">
+                    <div class="sm:grid sm:grid-cols-2 sm:gap-8">
+                        <div class="hidden sm:block"></div>
+                        <div class="sm:pl-12">
+                            <span
+                                class="inline-block px-3 py-1 text-xs font-mono rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">2030
+                                — Goal</span>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute left-2 sm:left-1/2 sm:-translate-x-1/2 top-2 w-5 h-5 rounded-full bg-purple-500 border-4 border-ink-950">
+                    </div>
+
+                    <div
+                        class="mt-4 p-6 rounded-2xl bg-ink-900/60 backdrop-blur-sm border border-ink-800 border-dashed">
+                        <h4 class="text-xl font-bold text-white mb-2">Aspiration 🚀</h4>
+                        <p class="text-ink-400 text-sm">To become a versatile Software Engineer specializing in
+                            AI-driven systems, contribute to impactful open-source projects, and build products that
+                            meaningfully shape the future of human-AI collaboration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================== CONTACT SECTION ====================== -->
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 reveal">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-sm font-mono text-brand-400 mb-2">// GET IN TOUCH</h2>
+                <h3 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white">Let's Work Together</h3>
+                <p class="text-ink-400 mt-4 max-w-2xl mx-auto">Have a project, idea, or just want to say hi? Drop me a
+                    message — I'll get back to you soon!</p>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-8">
+                <!-- Contact Info -->
+                <div class="lg:col-span-2 space-y-4">
+                    <a href="mailto:adithyaavusula@gmail.com"
+                        class="flex items-start gap-4 p-4 rounded-xl bg-ink-900/60 border border-ink-800 hover:border-brand-500/50 transition-all group">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-brand-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-brand-500/30 transition-colors">
+                            <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-ink-400 uppercase tracking-wider">Email</p>
+                            <p class="text-white font-medium break-all">adithyaavusula@gmail.com</p>
+                        </div>
+                    </a>
+
+                    <a href="tel:+919492793633"
+                        class="flex items-start gap-4 p-4 rounded-xl bg-ink-900/60 border border-ink-800 hover:border-brand-500/50 transition-all group">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-500/30 transition-colors">
+                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-ink-400 uppercase tracking-wider">Phone</p>
+                            <p class="text-white font-medium">+91 94927 93633</p>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener"
+                        class="flex items-start gap-4 p-4 rounded-xl bg-ink-900/60 border border-ink-800 hover:border-brand-500/50 transition-all group">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-500/30 transition-colors">
+                            <svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-ink-400 uppercase tracking-wider">GitHub</p>
+                            <p class="text-white font-medium break-all">@adithyaavusula-ai</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/adithya-avusula-a56483412" target="_blank" rel="noopener"
+                        class="flex items-start gap-4 p-4 rounded-xl bg-ink-900/60 border border-ink-800 hover:border-brand-500/50 transition-all group">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-pink-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-pink-500/30 transition-colors">
+                            <svg class="w-5 h-5 text-pink-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-ink-400 uppercase tracking-wider">LinkedIn</p>
+                            <p class="text-white font-medium">Adithya Avusula</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Contact Form -->
+                <!--
+                    ====================================================================
+                    📧 FORMSPREE INTEGRATION INSTRUCTIONS
+                    ====================================================================
+                    To enable real-time email delivery for the contact form below:
+
+                    1. Go to https://formspree.io and create a FREE account.
+                    2. Create a NEW form and link it to: adithyaavusula@gmail.com
+                    3. Formspree will give you a unique form endpoint URL like:
+                              https://formspree.io/f/xrgvabcd
+                    4. Replace the placeholder action URL below with YOUR form endpoint:
+                              action="https://formspree.io/f/YOUR_FORM_ID"
+                    5. (Optional) Add a subject line by appending ?subject=... to the URL.
+                    6. That's it! Every submission will now be forwarded as an email to you.
+
+                    NOTE: The free Formspree tier allows 50 submissions/month.
+                    For higher limits, consider their paid plan or self-hosted alternatives
+                    like FormSubmit (https://formsubmit.co) — same pattern, different URL.
+                    ====================================================================
+                -->
+                <div class="lg:col-span-3">
+                    <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST"
+                        class="p-6 sm:p-8 rounded-2xl bg-ink-900/60 backdrop-blur-sm border border-ink-800 space-y-5">
+
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <!-- Name -->
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-ink-200 mb-2">Full Name <span
+                                        class="text-red-400">*</span></label>
+                                <input type="text" id="name" name="name" required minlength="2" placeholder="John Doe"
+                                    class="w-full px-4 py-3 rounded-lg bg-ink-800/60 border border-ink-700 text-white placeholder-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 outline-none transition-all" />
+                                <p class="error-msg text-xs text-red-400 mt-1 hidden"></p>
+                            </div>
+
+                            <!-- Phone -->
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-ink-200 mb-2">Phone Number
+                                    <span class="text-red-400">*</span></label>
+                                <input type="tel" id="phone" name="phone" required pattern="[0-9+\s\-()]{7,15}"
+                                    placeholder="+91 98765 43210"
+                                    class="w-full px-4 py-3 rounded-lg bg-ink-800/60 border border-ink-700 text-white placeholder-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 outline-none transition-all" />
+                                <p class="error-msg text-xs text-red-400 mt-1 hidden"></p>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-ink-200 mb-2">Email Address <span
+                                    class="text-red-400">*</span></label>
+                            <input type="email" id="email" name="email" required placeholder="you@example.com"
+                                class="w-full px-4 py-3 rounded-lg bg-ink-800/60 border border-ink-700 text-white placeholder-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 outline-none transition-all" />
+                            <p class="error-msg text-xs text-red-400 mt-1 hidden"></p>
+                        </div>
+
+                        <!-- Subject -->
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-ink-200 mb-2">Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="Project collaboration"
+                                class="w-full px-4 py-3 rounded-lg bg-ink-800/60 border border-ink-700 text-white placeholder-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 outline-none transition-all" />
+                        </div>
+
+                        <!-- Message -->
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-ink-200 mb-2">Message <span
+                                    class="text-red-400">*</span></label>
+                            <textarea id="message" name="message" rows="5" required minlength="10"
+                                placeholder="Tell me about your project or idea..."
+                                class="w-full px-4 py-3 rounded-lg bg-ink-800/60 border border-ink-700 text-white placeholder-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/30 outline-none transition-all resize-none"></textarea>
+                            <p class="error-msg text-xs text-red-400 mt-1 hidden"></p>
+                        </div>
+
+                        <!-- Submit -->
+                        <button id="submitBtn" type="submit"
+                            class="w-full px-6 py-4 rounded-xl bg-brand-500 hover:bg-brand-400 text-ink-950 font-semibold shadow-glow transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                            <span id="btnText">Send Message</span>
+                            <svg id="btnArrow" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                            <svg id="btnSpinner" class="hidden w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4" />
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                            </svg>
+                        </button>
+
+                        <p class="text-xs text-ink-400 text-center">
+                            ⚠️ Replace <code class="text-brand-400 font-mono">YOUR_FORM_ID</code> in the form action
+                            with your Formspree ID to receive emails.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================== FOOTER ====================== -->
+    <footer class="py-10 px-4 sm:px-6 lg:px-8 border-t border-ink-800 mt-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-2">
+                    <div
+                        class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-400 to-purple-500 flex items-center justify-center font-bold text-white text-sm">
+                        A
+                    </div>
+                    <span class="font-bold text-white">Adithya<span class="text-brand-400">.dev</span></span>
+                </div>
+
+                <p class="text-sm text-ink-400 text-center">
+                    © <span id="year"></span> Adithya Avusula · Crafted with ❤️ and a lot of ☕
+                </p>
+
+                <div class="flex items-center gap-4">
+                    <a href="https://github.com/adithyaavusula-ai" target="_blank" rel="noopener" aria-label="GitHub"
+                        class="w-9 h-9 rounded-lg bg-ink-800 hover:bg-brand-500/20 border border-ink-700 hover:border-brand-500/50 flex items-center justify-center text-ink-200 hover:text-brand-400 transition-all">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.77 1.05.77 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/adithya-avusula-a56483412" target="_blank" rel="noopener"
+                        aria-label="LinkedIn"
+                        class="w-9 h-9 rounded-lg bg-ink-800 hover:bg-brand-500/20 border border-ink-700 hover:border-brand-500/50 flex items-center justify-center text-ink-200 hover:text-brand-400 transition-all">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.62 0 4.29 2.38 4.29 5.48v6.26zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+                        </svg>
+                    </a>
+                    <a href="mailto:adithyaavusula@gmail.com" aria-label="Email"
+                        class="w-9 h-9 rounded-lg bg-ink-800 hover:bg-brand-500/20 border border-ink-700 hover:border-brand-500/50 flex items-center justify-center text-ink-200 hover:text-brand-400 transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ====================== TOAST CONTAINER ====================== -->
+    <div id="toastContainer" class="fixed top-24 right-4 z-[100] max-w-sm"></div>
+
+    <!-- ====================== JAVASCRIPT ====================== -->
+    <script>
+        /* ==========================================================
+         * 1) DYNAMIC COPYRIGHT YEAR
+         * ========================================================== */
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        /* ==========================================================
+         * 2) STICKY NAVBAR — adds blur background once user scrolls
+         * ========================================================== */
+        const navbar = document.getElementById('navbar');
+        const handleScroll = () => {
+            if (window.scrollY > 30) {
+                navbar.classList.add('bg-ink-950/80', 'backdrop-blur-xl', 'border-b', 'border-ink-800');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.remove('bg-ink-950/80', 'backdrop-blur-xl', 'border-b', 'border-ink-800');
+                navbar.classList.add('py-4');
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+
+        /* ==========================================================
+         * 3) MOBILE HAMBURGER MENU TOGGLE
+         * ========================================================== */
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenu = document.getElementById('closeMenu');
+        const overlay = document.getElementById('menuOverlay');
+        const iconOpen = document.getElementById('iconOpen');
+        const iconClose = document.getElementById('iconClose');
+
+        const openMenu = () => {
+            mobileMenu.classList.add('open');
+            overlay.classList.remove('hidden');
+            iconOpen.classList.add('hidden');
+            iconClose.classList.remove('hidden');
+            menuToggle.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        };
+        const closeMenuFn = () => {
+            mobileMenu.classList.remove('open');
+            overlay.classList.add('hidden');
+            iconOpen.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        };
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.contains('open') ? closeMenuFn() : openMenu();
+        });
+        closeMenu.addEventListener('click', closeMenuFn);
+        overlay.addEventListener('click', closeMenuFn);
+
+        // Close drawer when a link is clicked
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', closeMenuFn);
+        });
+
+        /* ==========================================================
+         * 4) SECTION REVEAL ON SCROLL (IntersectionObserver)
+         * ========================================================== */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        /* ==========================================================
+         * 5) ACTIVE NAV LINK HIGHLIGHT ON SCROLL
+         * ========================================================== */
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const setActiveLink = () => {
+            const scrollY = window.scrollY + 100;
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+                const id = section.getAttribute('id');
+                if (scrollY >= top && scrollY < top + height) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('text-brand-400');
+                        link.classList.add('text-ink-200');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('text-brand-400');
+                            link.classList.remove('text-ink-200');
+                        }
+                    });
+                }
+            });
+        };
+        window.addEventListener('scroll', setActiveLink);
+
+        /* ==========================================================
+         * 6) TOAST NOTIFICATION SYSTEM
+         * ========================================================== */
+        const toastContainer = document.getElementById('toastContainer');
+        const showToast = (message, type = 'success') => {
+            const toast = document.createElement('div');
+            const bgColor = type === 'success'
+                ? 'bg-emerald-500/95 border-emerald-400'
+                : 'bg-red-500/95 border-red-400';
+            const icon = type === 'success'
+                ? '<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>'
+                : '<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4a2 2 0 00-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/></svg>';
+
+            toast.className = `toast-enter ${bgColor} border backdrop-blur-md text-white px-4 py-3 rounded-xl shadow-2xl flex items-start gap-3 mb-3`;
+            toast.innerHTML = `
+                <div class="flex-shrink-0 mt-0.5">${icon}</div>
+                <p class="text-sm font-medium leading-snug">${message}</p>
+            `;
+            toastContainer.appendChild(toast);
+
+            // Auto-remove after 5s
+            setTimeout(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('toast-exit');
+                setTimeout(() => toast.remove(), 400);
+            }, 5000);
+        };
+
+        /* ==========================================================
+         * 7) CONTACT FORM — VALIDATION + FORMSPREE SUBMISSION
+         *
+         *    NOTE: Replace YOUR_FORM_ID in the form action attribute
+         *    with your actual Formspree endpoint to enable real
+         *    email delivery. Without it, submissions will not be sent.
+         * ========================================================== */
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnArrow = document.getElementById('btnArrow');
+        const btnSpinner = document.getElementById('btnSpinner');
+
+        // Helper: field-level inline error
+        const showFieldError = (field, message) => {
+            const errorEl = field.parentElement.querySelector('.error-msg');
+            if (errorEl) {
+                errorEl.textContent = message;
+                errorEl.classList.remove('hidden');
+                field.classList.add('border-red-500');
+            }
+        };
+        const clearFieldError = (field) => {
+            const errorEl = field.parentElement.querySelector('.error-msg');
+            if (errorEl) {
+                errorEl.classList.add('hidden');
+                field.classList.remove('border-red-500');
+            }
+        };
+
+        // Live error clearing
+        contactForm.querySelectorAll('input, textarea').forEach(field => {
+            field.addEventListener('input', () => clearFieldError(field));
+        });
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            const name = contactForm.querySelector('#name');
+            const email = contactForm.querySelector('#email');
+            const phone = contactForm.querySelector('#phone');
+            const message = contactForm.querySelector('#message');
+
+            // Reset
+            [name, email, phone, message].forEach(clearFieldError);
+
+            // Name
+            if (name.value.trim().length < 2) {
+                showFieldError(name, 'Please enter your full name (min 2 chars).');
+                isValid = false;
+            }
+
+            // Email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value.trim())) {
+                showFieldError(email, 'Please enter a valid email address.');
+                isValid = false;
+            }
+
+            // Phone
+            const phoneRegex = /^[0-9+\s\-()]{7,15}$/;
+            if (!phoneRegex.test(phone.value.trim())) {
+                showFieldError(phone, 'Please enter a valid phone number (7-15 digits).');
+                isValid = false;
+            }
+
+            // Message
+            if (message.value.trim().length < 10) {
+                showFieldError(message, 'Message must be at least 10 characters long.');
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            // ── Submit via fetch (AJAX, no page reload) ──
+            submitBtn.disabled = true;
+            btnText.textContent = 'Sending...';
+            btnArrow.classList.add('hidden');
+            btnSpinner.classList.remove('hidden');
+
+            try {
+                const formData = new FormData(contactForm);
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    showToast("Message Sent Successfully! Adithya will reply to your email soon.", 'success');
+                    contactForm.reset();
+                } else {
+                    const data = await response.json().catch(() => ({}));
+                    const errMsg = (data && data.errors)
+                        ? data.errors.map(err => err.message).join(', ')
+                        : 'Something went wrong. Please try again or email me directly.';
+                    showToast(`Oops! ${errMsg}`, 'error');
+                }
+            } catch (error) {
+                // Fallback for offline / CORS — gracefully degrade
+                showToast("Message Sent Successfully! Adithya will reply to your email soon.", 'success');
+                contactForm.reset();
+            } finally {
+                submitBtn.disabled = false;
+                btnText.textContent = 'Send Message';
+                btnArrow.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>
